@@ -1,0 +1,75 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+}
+
+.avatar {
+    width: 184px;
+    height: 184px;
+    background-image: url("avatar.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 3px solid black;
+    position: relative;
+    transition: ease-in-out 100ms all;
+}
+
+.avatar:hover {
+    border-color: #EEE;
+}
+
+
+/* Tooltip consists of two elements:
+::before is the text and textbox 
+::after is the little arrow at the bottom */
+.avatar::before,
+.avatar::after {
+    --scale: 0;
+    --tooltip-color: #EEE;
+    --arrow-size: 10px;
+
+    position: absolute;
+    top: -.75rem;
+    left: 50%;
+    transform: translate(-50%, var(--translate-y, 0)) scale(var(--scale));
+    transition: ease-in-out 100ms all;
+}
+
+.avatar::before {
+    --translate-y: calc(-100% - var(--arrow-size));
+
+    transform-origin: bottom center;
+    content: attr(data-tooltip);
+    font-weight: bold;
+    color: #333;
+    background-color: var(--tooltip-color);
+    border-radius: .3rem;
+    padding: .5rem;
+    width: max-content;
+    max-width: 100%;
+    text-align: center;
+}
+
+.avatar::after {
+    --translate-y: calc(-1 * var(--arrow-size));
+
+    transform-origin: top center;
+    content: "";
+    border: var(--arrow-size) solid transparent;
+    border-top-color: var(--tooltip-color);
+}
+
+.avatar:hover::before,
+.avatar:hover::after {
+    --scale: 1;
+}
